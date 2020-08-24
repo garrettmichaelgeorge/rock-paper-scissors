@@ -1,97 +1,39 @@
-<DOCTYPE=html>
+<!DOCTYPE html>
 <html>
   <head>
-    <script>
-      "use strict";
+    <meta charset="utf-8">
+    <title>Rock, Paper, Scissors!</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-const options = ['rock', 'paper', 'scissors']        
-let playerSelection
-let computerSelection
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
 
-let score = {
-  player: 0,
-  computer: 0
-};
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
 
-
-// Messages
-function showRoundOverMessage(winner) {
-  switch (winner) {
-    case 'player':
-      `You win! ${playerSelection} beats ${computerSelection}!`;
-      break;
-    case 'computer':
-      `You lose! ${computerSelection} beats ${playerSelection}!`;
-      break;
-    default:
-      "It's a draw!";
-      break;
-  }
-}
-
-function computerPlay() {
-  let index = Math.floor(Math.random() * 3);
-  return options[index];
-}
-
-function playRound(playerSelection, computerSelection) {
-  return (playerSelection == computerSelection) ? 'draw' :
-    (playerSelection == 'rock' && computerSelection == 'scissors'
-      || playerSelection == 'paper' && computerSelection == 'rock'
-      || playerSelection == 'scissors' && computerSelection == 'paper') ?
-    'player' : 'computer';
-}
-
-function getPlayerSelection() {
-  const promptMessage = `Rock, paper, or scissors?`;
-  let input = ""
-  do {
-    input = prompt(promptMessage).toLowerCase();
-  } while (!options.includes(input));
-  return input
-}
-
-function updateScore(result) {
-  switch (result) {
-    case 'player':
-      score.player++;
-      break;
-    case 'computer':
-      score.computer++;
-      break;
-    default:
-      break;
-  }
-}
-
-function getGameOverMessage() {
-  if (score.player == score.computer)
-    return `Tie!!! ${score.player} to ${score.computer}`;
-  else if (score.player > score.computer)
-    return `VICTORY!!! ${score.player} to ${score.computer}`;
-  else
-    return `Defeat!!! ${score.player} to ${score.computer}`;
-}
-
-function game() {
-  for (let i = 0; i < 5; i++) {
-    playerSelection = getPlayerSelection();
-    computerSelection = computerPlay();
-
-    console.log(playerSelection)
-    console.log(computerSelection)
-
-    let roundResult = playRound(playerSelection, computerSelection)
-    updateScore(roundResult)
-
-    console.log(score)
-  }
-  console.log(getGameOverMessage())
-}
-
-console.log(game())
-    </script>
+    <meta name="theme-color" content="#fafafa">
   </head>
   <body>
+    <header id="header">
+      <h1>Rock, Paper, Scissors</h1>
+    </header>
+    <main id="main">
+      <div id="btn-container">
+        <button id="rock" class="btn">Rock</button>
+        <button id="paper" class="btn">Paper</button>
+        <button id="scissors" class="btn">Scissor</button>
+      </div>
+      <div id="results">
+      </div>
+    </main>
+
+    <footer class="footer">
+    </footer>
+
+    <script src="js/game.js"></script>
   </body>
 </html>
