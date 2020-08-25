@@ -1,0 +1,22 @@
+body {
+  font: 16px / 18px proxima-nova-extra-condensed;
+  background-color: white;
+}
+
+.container {
+  max-width: 40em;
+  margin: auto;
+  min-height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.center {
+  margin: auto;
+}
+
+.btn {
+  background-color: white;
+}

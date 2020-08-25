@@ -4,38 +4,23 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
-calculateRoundResult.didPlayerWin	js/game.js	/^    function didPlayerWin(playerSelection, computerSelection) {$/;"	f
-calculateRoundResult.isTieRound	js/game.js	/^    function isTieRound() {$/;"	f
-calculateRoundResult.updatePlayerMove	js/game.js	/^    function updatePlayerMove(newMove) {$/;"	f
-computer	js/game.js	/^function computer() {return computerData;}$/;"	f
-computerMove	js/game.js	/^function computerMove(roundNumber) {$/;"	f
 computerPlay	archive/rock-paper-scissors-console.html	/^function computerPlay() {$/;"	f
 game	archive/rock-paper-scissors-console.html	/^function game() {$/;"	f
 getGameOverMessage	archive/rock-paper-scissors-console.html	/^function getGameOverMessage() {$/;"	f
-getGameOverMessage	js/game.js	/^function getGameOverMessage() {$/;"	f
-getGameOverMessage.getTieMessage	js/game.js	/^  function getTieMessage() {$/;"	f
-getGameOverMessage.tie	js/game.js	/^  function tie() {$/;"	f
-getGameOverMessage.win	js/game.js	/^  function win() {$/;"	f
-getLoseMessage	js/game.js	/^  function getLoseMessage() {$/;"	f
-getNewPlayerMoveAlert	js/game.js	/^function getNewPlayerMoveAlert(player) {$/;"	f
-getNewPlayerMoveAlert.promptMessage	js/game.js	/^  function promptMessage() {return `Rock, paper, or scissors?`;}$/;"	f
 getPlayerSelection	archive/rock-paper-scissors-console.html	/^function getPlayerSelection() {$/;"	f
-getWinMessage	js/game.js	/^  function getWinMessage() {$/;"	f
+let.computer	js/game.js	/^  computer: 0,$/;"	p
 let.moves	js/game.js	/^  moves: [],$/;"	p
 let.name	js/game.js	/^  name: "",$/;"	p
 let.name	js/game.js	/^  name: "computer",$/;"	p
+let.player	js/game.js	/^  player: 0,$/;"	p
 let.score	js/game.js	/^  score: 0, $/;"	p
 let.score	js/game.js	/^  score: 0,$/;"	p
-playGame	js/game.js	/^function playGame() {$/;"	f
-playGame.calculateRoundResult	js/game.js	/^  function calculateRoundResult(playerSelection, computerSelection) {$/;"	f
-playGameConsole	js/game.js	/^function playGameConsole() {$/;"	f
 playRound	archive/rock-paper-scissors-console.html	/^function playRound(playerSelection, computerSelection) {$/;"	f
-player	js/game.js	/^function player() {return playerData;}$/;"	f
-playerMove	js/game.js	/^function playerMove(roundNumber) {$/;"	f
-score	js/game.js	/^function score() {$/;"	f
-setComputerMove	js/game.js	/^function setComputerMove() {$/;"	f
-setPlayerMoveGUI	js/game.js	/^function setPlayerMoveGUI() {$/;"	f
-setScore	js/game.js	/^function setScore(roundWinner) {$/;"	f
+playRound.roundResultFrom	js/game.js	/^    function roundResultFrom(playerSelection, computerSelection) {$/;"	f
+playRound.updateMoves	js/game.js	/^    function updateMoves() {$/;"	f
+roundResultFrom.didPlayerWinRound	js/game.js	/^      function didPlayerWinRound(playerSelection, computerSelection) {$/;"	f
+roundResultFrom.displayGameStatus	js/game.js	/^      function displayGameStatus() {$/;"	f
+roundResultFrom.isGameOver	js/game.js	/^      function isGameOver() {$/;"	f
+roundResultFrom.isTieRound	js/game.js	/^      function isTieRound() {$/;"	f
 showRoundOverMessage	archive/rock-paper-scissors-console.html	/^function showRoundOverMessage(winner) {$/;"	f
-showRoundOverMessage	js/game.js	/^function showRoundOverMessage(winner) {$/;"	f
 updateScore	archive/rock-paper-scissors-console.html	/^function updateScore(result) {$/;"	f

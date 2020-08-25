@@ -1,7 +1,9 @@
 "use strict";
 
 // Global variables
-const OPTIONS = ['rock', 'paper', 'scissors']        
+const OPTIONS = ['rock', 'paper', 'scissors']        ;
+const ROUNDS = 5;
+const TIMEOUT = 1000;
 
 let scoreData = {
   player: 0,
@@ -20,90 +22,140 @@ let computerData = {
   moves: [],
 }
 
+
+// HTML
 const buttons = document.querySelectorAll('button');
+const resultsContainer = document.querySelector('#results');
+const iconScissors = document.querySelector('.icon-scissors')
+const iconRock = document.querySelector('.icon-rock')
+const iconPaper = document.querySelector('.icon-paper')
+
+const playerMoveDisplay = document.createElement('p');
+const computerMoveDisplay = document.createElement('p');
+const roundResultDisplay = document.createElement('p');
+const gameStatusDisplay = document.createElement('p');
+resultsContainer.appendChild(roundResultDisplay);
+
+[playerMoveDisplay, computerMoveDisplay].forEach((element) => {
+  resultsContainer.appendChild(element);
+})
+
+[roundResultDisplay, gameStatusDisplay].forEach((element) => {
+  resultsContainer.appendChild(element);
+})
 
 // Main program flow
-playGameConsole();
-
-function playGameConsole() {
-  console.log(playGame());
-}
+playGame();
 
 function playGame() {
-  for (let i = 0; i < 5; i++) {
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      playRound(btn.id);
+    });
+  });
+
+
+  function playRound(playerInput) {
     // PLAY ROUND
-    let playerSelection;
-    let computerSelection;
+    updateMoves();
+    setScore(roundResultFrom(playerMoveLatest(), computerMoveLatest()));
+    updateDisplay();
 
-    // Get selections from player and computer
-    updatePlayerMove(getNewPlayerMove());
-    updateComputerMove(getNewComputerMove);
+    function updateMoves() {
+      updatePlayerMove(playerInput);
+      updateComputerMove(getNewComputerMove());
+    }
 
-    // Update score
-    setScore(roundResultFrom());
-
-    // Display both selections
-    console.log(playerSelection + ' ' + computerSelection);
-
-    // Display updated score
-    console.log(score());
-  }
-
-  // Show game results
-  console.log(getGameOverMessage());
-
-  function roundResultFrom(playerSelection, computerSelection) {
-    return (isTieRound() ?
-      'draw' :
-      didPlayerWin(playerSelection, computerSelection) ?
+    function roundResultFrom(playerSelection, computerSelection) {
+      return (isTieRound() ?
+        'draw' :
+        didPlayerWinRound(playerSelection, computerSelection) ?
         'player' :
         'computer');
 
-    function isTieRound() {
-      return playerSelection === computerSelection;
+      function isTieRound() {
+        return playerSelection === computerSelection;
+      }
+
+      function didPlayerWinRound(playerSelection, computerSelection) {
+        return (playerSelection === 'rock'     && computerSelection === 'scissors') ||
+          (playerSelection === 'paper'    && computerSelection === 'rock')     ||
+          (playerSelection === 'scissors' && computerSelection === 'paper')
+      }
     }
 
-    function didPlayerWin(playerSelection, computerSelection) {
-      return (playerSelection === 'rock'     && computerSelection === 'scissors') ||
-             (playerSelection === 'paper'    && computerSelection === 'rock')     ||
-             (playerSelection === 'scissors' && computerSelection === 'paper')
-    }
+    async function updateDisplay() {
+      displayPlayerMove();
+      computerMoveDisplay.textContent = ``;
+      roundResultDisplay.textContent = ``;
 
+      await new Promise(r => setTimeout(r, TIMEOUT));
+      displayComputerMove();
+      await new Promise(r => setTimeout(r, TIMEOUT));
+      displayRoundResult();
+
+      if (isGameOver()) {displayGameStatus();}
+
+      function displayPlayerMove() {
+        playerMoveDisplay.textContent = `Your move: ${playerMoveLatest()}`;
+      }
+
+      function displayComputerMove() {
+        computerMoveDisplay.textContent = `Opponent's move: ${computerMoveLatest()}`;
+      }
+
+      function displayRoundResult() {
+        roundResultDisplay.textContent = Object.entries(score()).reduce((content, current, index, array) => content + '\n' + current.join(': '), '');
+      }
+
+      function isGameOver() {
+        return player().moves.length >= ROUNDS;
+      }
+
+      function displayGameStatus() {
+        gameStatusDisplay.textContent = getGameOverMessage();
+      }
+    }
   }
+
 }
+
 // Queries
 function player() {return playerData;}
 function computer() {return computerData;}
 
 function playerMoveLatest() {
-  const count = player().moves.size();
+  const count = player().moves.length;
   return playerMove(count - 1);
 }
 
-function playerMove(roundNumber) {
-  return player().moves[roundNumber];
+function computerMoveLatest() {
+  const count = computer().moves.length;
+  return computerMove(count - 1);
 }
 
-function computerMove(roundNumber) {
-  return computer().moves[roundNumber];
+function playerMove(index) {
+  return player().moves[index];
+}
+
+function computerMove(index) {
+  return computer().moves[index];
 }
 
 function updatePlayerMove(newMove) {
-  player().moves += newMove;
+  player().moves.push(newMove);
 }
 
 function updateComputerMove(newMove) {
-  computer().moves += newMove;
+  computer().moves.push(newMove);
 }
 
-function score() {
-  return scoreData;
-}
+function score() {return scoreData;}
 
 function setScore(roundWinner) {
   if (!['computer', 'player'].includes(roundWinner)) return;
 
-  score[roundWinner]++;
+  scoreData[roundWinner] += 1;
 }
 
 // Player and computer move
@@ -152,8 +204,8 @@ function getGameOverMessage() {
   return tie() ?
     getTieMessage() :
     win() ?
-      getWinMessage() :
-      getLoseMessage();
+    getWinMessage() :
+    getLoseMessage();
 
   function getTieMessage() {
     return `Tie!!! ${score().player} to ${score().computer}`;
