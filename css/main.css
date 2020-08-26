@@ -1,6 +1,23 @@
+/* Color Theme Swatches in Hex */
+html {
+  --color-1: #F2BDD6;
+  --color-2: #BF95BC;
+  --color-3: #7C6C8C;
+  --color-4: #433743;
+  --color-5: #FEB9AA;
+  --color-light-gray: #EEEEEE;
+  --border-radius: 0.25rem;
+}
+
 body {
   font: 16px / 18px proxima-nova-extra-condensed;
   background-color: white;
+  color: var(--color-4);
+}
+
+h1 {
+  font-size: 2.44rem;
+  font-weight: 100;
 }
 
 .container {
@@ -13,10 +30,60 @@ body {
   justify-content: center;
 }
 
-.center {
-  margin: auto;
+#ui-battleground {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0;
+}
+
+.ui-battleground-player {
+  padding-right: 1rem;
+}
+
+.icon-player path {
+  fill: var(--color-3);
+}
+
+.icon-computer path {
+  fill: var(--color-5);
+}
+
+.ui-battleground-computer {
+
 }
 
 .btn {
-  background-color: white;
+  /* background-color: white; */
+}
+
+.btn {
+  display: inline-block;
+  font-weight: 400;
+  color: var(--color-4);
+  text-align: center;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  background-color: var(--color-light-gray);
+  border: 1px solid transparent;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: var(--border-radius);
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.btn:hover {
+  background-color: #DDDDDD;
+  cursor: auto;
+}
+
+.d-none {
+  display: none;
+}
+
+.footer {
+  font-family: proxima-nova-extra-condensed;
 }

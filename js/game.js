@@ -26,19 +26,22 @@ let computerData = {
 // HTML
 const buttons = document.querySelectorAll('button');
 const resultsContainer = document.querySelector('#results');
-const iconScissors = document.querySelector('.icon-scissors')
-const iconRock = document.querySelector('.icon-rock')
-const iconPaper = document.querySelector('.icon-paper')
 
-const playerMoveDisplay = document.createElement('p');
-const computerMoveDisplay = document.createElement('p');
+const battlegroundPlayer = document.querySelector('#ui-battleground-player');
+const battlegroundComputer = document.querySelector('#ui-battleground-computer');
+const playerIcons = getSiblings(battlegroundPlayer.firstChild, (el) => el.nodeName === 'svg');
+const computerIcons = getSiblings(battlegroundComputer.firstChild, (el) => el.nodeName === 'svg');
+
+const playerMoveDisplay = document.createElement('div');
+const computerMoveDisplay = document.createElement('div');
 const roundResultDisplay = document.createElement('p');
+roundResultDisplay.classList.add('round-result-display');
 const gameStatusDisplay = document.createElement('p');
+gameStatusDisplay.classList.add('game-status-display');
 resultsContainer.appendChild(roundResultDisplay);
 
-[playerMoveDisplay, computerMoveDisplay].forEach((element) => {
-  resultsContainer.appendChild(element);
-})
+battlegroundPlayer.appendChild(playerMoveDisplay);
+battlegroundComputer.appendChild(computerMoveDisplay);
 
 [roundResultDisplay, gameStatusDisplay].forEach((element) => {
   resultsContainer.appendChild(element);
@@ -85,27 +88,31 @@ function playGame() {
     }
 
     async function updateDisplay() {
+      playerIcons.forEach((icon) => hide(icon));
+      computerIcons.forEach((icon) => hide(icon));
+
       displayPlayerMove();
-      computerMoveDisplay.textContent = ``;
-      roundResultDisplay.textContent = ``;
 
       await new Promise(r => setTimeout(r, TIMEOUT));
       displayComputerMove();
-      await new Promise(r => setTimeout(r, TIMEOUT));
       displayRoundResult();
 
       if (isGameOver()) {displayGameStatus();}
 
       function displayPlayerMove() {
-        playerMoveDisplay.textContent = `Your move: ${playerMoveLatest()}`;
+        for (let icon of playerIcons) {
+          if (icon.id === `icon-${playerMoveLatest()}-player`) {show(icon);}
+        }
       }
 
       function displayComputerMove() {
-        computerMoveDisplay.textContent = `Opponent's move: ${computerMoveLatest()}`;
+        for (let icon of computerIcons) {
+          if (icon.id === `icon-${computerMoveLatest()}-computer`) {show(icon);}
+        }
       }
 
       function displayRoundResult() {
-        roundResultDisplay.textContent = Object.entries(score()).reduce((content, current, index, array) => content + '\n' + current.join(': '), '');
+        roundResultDisplay.textContent = `You: ${score().player}\nComputer: ${score().computer}`;
       }
 
       function isGameOver() {
@@ -117,7 +124,6 @@ function playGame() {
       }
     }
   }
-
 }
 
 // Queries
@@ -208,15 +214,15 @@ function getGameOverMessage() {
     getLoseMessage();
 
   function getTieMessage() {
-    return `Tie!!! ${score().player} to ${score().computer}`;
+    return `Tie!`;
   }
 
   function getWinMessage() {
-    return `Victory!!! ${score().player} to ${score().computer}`;
+    return `Victory!`;
   }
 
   function getLoseMessage() {
-    return `Defeat!!! ${score().player} to ${score().computer}`;
+    return `Defeat!`;
   }
 }
 
@@ -228,3 +234,20 @@ function win() {
   return score().player > score().computer;
 }
 
+// View-related functions
+function hide(element) {
+  console.log(`Hiding ${element}...\n`);
+  element.classList.add('d-none');
+}
+
+function show(element) {
+  console.log(`Showing ${element}...\n`);
+  element.classList.remove('d-none');
+}
+
+function getSiblings(el, filter) {
+  let result = [];
+  el = el.parentNode.firstChild;
+  do { if (!filter || filter(el)) result.push(el); } while (el = el.nextSibling);
+  return result;
+}
