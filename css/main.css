@@ -9,6 +9,10 @@ html {
   --border-radius: 0.25rem;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   font: 16px / 18px proxima-nova-extra-condensed;
   background-color: white;
@@ -33,7 +37,8 @@ h1 {
 #ui-battleground {
   display: flex;
   justify-content: center;
-  padding: 1rem 0;
+  padding: 2rem 0;
+  height: 10rem;
 }
 
 .ui-battleground-player {
